@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-int n, c[20][20], i, j, visited[20];
+const int MAX = 20;
+int n, c[MAX][MAX], i, j, visited[MAX];
 void prim();
 int main() {
     cout << "Enter number of vertices" << endl;
@@ -16,21 +17,28 @@ int main() {
 }
 void prim() {
     int min, a, b, k, count = 0, cost = 0;
-    min = 999;
     visited[1] = 1;
     while (count < n - 1) {
         min = 999;
-        for (i = 1; i <= n; i++)
-            for (j = 1; j <= n; j++)
-                if (visited[i] && !visited[j] && min > c[i][j]) {
-                    min = c[i][j];
-                    a = i;
-                    b = j;
+        for (i = 1; i <= n; i++) {
+            if (visited[i]) {
+                for (j = 1; j <= n; j++) {
+                    if (!visited[j] && min > c[i][j]) {
+                        min = c[i][j];
+                        a = i;
+                        b = j;
+                    }
                 }
-        cout << a << "--->" << b << " = " << c[a][b] << endl;
-        cost += c[a][b];
+            }
+        }
+        if (min == 999) {
+            cout << "Graph is not connected." << endl;
+            return;
+        }
+        cout << a << "--->" << b << " = " << min << endl;
+        cost += min;
         visited[b] = 1;
         count++;
     }
-    cout << "Total cost of Spanning tree is " << cost;
+    cout << "Total cost of Spanning tree is " << cost << endl;
 }
