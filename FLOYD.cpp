@@ -19,7 +19,10 @@ int main() {
     cin >> e;
     for (i = 1; i <= n; i++)
         for (j = 1; j <= n; j++)
-            p[i][j] = (i == j) ? 0 : 999;
+            if (i == j)
+                p[i][j] = 0;
+            else
+                p[i][j] = 999;
     for (i = 1; i <= e; i++) {
         cout << "\nEnter the end vertices of edge " << i << " with its weight:\n";
         cin >> u >> v >> w;
