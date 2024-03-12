@@ -9,7 +9,7 @@ int partition(int arr[], int low, int high, int pivot){
 			i++;
 		}
 		else{
-			swap(i,j);
+			swap(arr[i],arr[j]);
 			i++;
 			j++;
 		}
