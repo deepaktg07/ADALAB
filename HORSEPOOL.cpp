@@ -1,42 +1,42 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-char str[100], ptn[20];
-int res, m, n, len, len1, i, j, k, table[1000];
-void shift(const char p[]) {
-    len = strlen(p);
-    for (i = 0; i < 1000; i++)
-        table[i] = len;
-    for (j = 0; j <= len - 2; j++)
-        table[p[j]] = len - 1 - j;
-}
-int horspool(const char p[], const char t[]) {
-    shift(p);
-    m = strlen(p);
+
+int main() {
+    int table[126];
+    char t[100], p[25];
+    int n, i, k, j, m, flag = 0;
+
+    cout << "Enter the text: ";
+    cin.getline(t, 100);
     n = strlen(t);
+
+    cout << "Enter the pattern: ";
+    cin.getline(p, 25);
+    m = strlen(p);
+
+    for (i = 0; i < 126; i++)
+        table[i] = m;
+
+    for (j = 0; j < m - 1; j++)
+        table[p[j]] = m - 1 - j;
+
     i = m - 1;
     while (i <= n - 1) {
         k = 0;
-        while (k <= m - 1 && (p[m - 1 - k] == t[i - k]))
+        while (k <= m - 1 && p[m - 1 - k] == t[i - k])
             k++;
-        if (k == m)
-            return i - m + 1;
-        else
+        if (k == m) {
+            cout << "The position of the pattern is " << i - m + 2 << endl;
+            flag = 1;
+            break;
+        } else {
             i = i + table[t[i]];
+        }
     }
-    return -1;
-}
-int main() {
-    cout << "Enter the text" << endl;
-    cin.getline(str, 100);
-    cout << "Enter the pattern to be found" << endl;
-    cin.getline(ptn, 20);
-    cout << "Length of the text: " << strlen(str) << " characters" << endl;
-    cout << "Length of the pattern: " << strlen(ptn) << " characters" << endl;
-    res = horspool(ptn, str);
-    if (res == -1)
-        cout << "\nPattern not found" << endl;
-    else
-        cout << "Pattern found at " << res + 1 << " position" << endl;
+
+    if (!flag)
+        cout << "Pattern is not found in the given text" << endl;
+
     return 0;
 }
